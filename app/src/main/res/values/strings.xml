@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Tray Management</string>
+    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+    <string name="title_add_route">Add Route</string>
+    <string name="title_franchise">Franchise</string>
+    <string name="title_vehicle_out">Vehicle Out</string>
+    <string name="title_vehicle_in">Vehicle In</string>
+    <string name="title_reports">Reports</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

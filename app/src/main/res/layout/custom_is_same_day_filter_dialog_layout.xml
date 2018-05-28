@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rbFilter_All"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="All" />
+
+        <RadioButton
+            android:id="@+id/rbFilter_Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Regular" />
+
+        <RadioButton
+            android:id="@+id/rbFilter_isSameDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Is Same Day" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_margin="15dp"
+        android:id="@+id/tvFilter_Search"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_layout"
+        android:fontFamily="@font/open_sans_semi_bold"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Search"
+        android:textColor="@color/colorWhite" />
+
+</LinearLayout>
