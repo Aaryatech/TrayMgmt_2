@@ -717,7 +717,6 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
                     @Override
                     public void onClick(View view) {
 
-
                         edSmall.setText("0");
                         edBig.setText("0");
                         edLarge.setText("0");
@@ -726,7 +725,7 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
                         tvSelectFrId.setText("" + displayedValues.get(position).getFrId());
                         tvSelectFr.setText("" + displayedValues.get(position).getFrName());
                         dialog.dismiss();
-                        getFrTray(displayedValues.get(position).getFrId());
+                       // getFrTray(displayedValues.get(position).getFrId());
 
                     }
                 });

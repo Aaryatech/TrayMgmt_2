@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String username = edUsername.getText().toString();
                 String pass = edPassword.getText().toString();
 
-                if (username.equals("gfpl") && pass.equals("123")) {
+                if (username.equals("admin") && pass.equals("123")) {
 
                     SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();
