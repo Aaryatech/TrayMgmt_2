@@ -8,4 +8,6 @@
     <color name="menu_text_color">#8b79c7</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
+
+    <color name="colorList">#FFE4ED</color>
 </resources>

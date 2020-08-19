@@ -10,11 +10,18 @@
         app:showAsAction="ifRoom" />
 
     <item
-    android:id="@+id/action_vehicle_status"
-    android:icon="@drawable/ic_truck"
-    android:title="Vehicle Status"
-    android:visible="false"
-    app:showAsAction="ifRoom" />
+        android:id="@+id/action_reports"
+        android:icon="@drawable/ic_reports"
+        android:title="Reports"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_vehicle_status"
+        android:icon="@drawable/ic_truck"
+        android:title="Vehicle Status"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_logout"

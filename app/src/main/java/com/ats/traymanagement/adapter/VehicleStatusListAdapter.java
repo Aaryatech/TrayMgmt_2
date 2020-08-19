@@ -3,6 +3,7 @@ package com.ats.traymanagement.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,8 @@ public class VehicleStatusListAdapter extends RecyclerView.Adapter<VehicleStatus
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.tvName.setText(vehicleList.get(position).getTranId()+"_"+vehicleList.get(position).getVehNo() + " " + vehicleList.get(position).getDriverName());
         holder.tvRoute.setText(vehicleList.get(position).getRouteName());
+
+        Log.e("VEH LIST - ",""+vehicleList.get(position));
 
         if (vehicleList.get(position).getVehStatus() == 0) {
             holder.tvType.setText("LOADING");

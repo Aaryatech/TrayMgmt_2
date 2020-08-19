@@ -36,7 +36,7 @@ import java.util.Calendar;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static LinearLayout llHome, llAddRoute, llFranchise, llVehicleOut, llVehicleIn, llHomeBG,llAddRouteBG, llFranchiseBG, llVehicleOutBG, llVehicleInBG;
+    public static LinearLayout llHome, llAddRoute, llFranchise, llVehicleOut, llVehicleIn, llHomeBG, llAddRouteBG, llFranchiseBG, llVehicleOutBG, llVehicleInBG;
     public static TextView tvHome, tvAddRoute, tvFranchise, tvVehicleOut, tvVehicleIn;
 
     @Override
@@ -224,6 +224,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onPrepareOptionsMenu(menu);
         MenuItem item = menu.findItem(R.id.action_logout);
         item.setVisible(true);
+
+        MenuItem itemReports = menu.findItem(R.id.action_reports);
+        itemReports.setVisible(true);
+
         return true;
     }
 
@@ -258,6 +262,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 AlertDialog dialog = builder.create();
                 dialog.show();
 
+                return true;
+
+
+            case R.id.action_reports:
+                startActivity(new Intent(HomeActivity.this, FranchiseWiseReportActivity.class));
                 return true;
 
             default:

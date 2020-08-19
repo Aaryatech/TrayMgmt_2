@@ -4,13 +4,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ats.traymanagement.R;
+import com.ats.traymanagement.common.CommonDialog;
 import com.ats.traymanagement.constants.Constants;
+import com.ats.traymanagement.model.LoginModel;
+import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -61,4 +69,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
+
 }

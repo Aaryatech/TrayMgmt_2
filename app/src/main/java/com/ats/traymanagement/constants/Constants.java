@@ -24,9 +24,8 @@ public class Constants {
 
     public static final String MY_PREF = "TRAY_PREF";
 
-    //public static final String BASE_URL = "http://192.168.2.6:8095/";
-    public static final String BASE_URL = "http://132.148.151.41:8080/webapi/";
-    //public static final String BASE_URL = "http://148.72.40.234:8080/bakerywebapi/";
+   // public static final String BASE_URL = "http://192.168.2.4:8096/";
+    public static final String BASE_URL = "http://107.180.95.11:8080/webapi/";
 
 
     public static OkHttpClient client = new OkHttpClient.Builder()

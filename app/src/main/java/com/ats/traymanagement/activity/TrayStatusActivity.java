@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ats.traymanagement.R;
+import com.ats.traymanagement.adapter.TrayInAdapter;
 import com.ats.traymanagement.adapter.TrayStatusListAdapter;
 import com.ats.traymanagement.adapter.VehicleInTrayStatusAdapter;
 import com.ats.traymanagement.adapter.VehicleListAdapter;
@@ -41,6 +42,7 @@ import com.ats.traymanagement.fragment.VehicleListFragment;
 import com.ats.traymanagement.model.FrTrayCount;
 import com.ats.traymanagement.model.FranchiseByRoute;
 import com.ats.traymanagement.model.Info;
+import com.ats.traymanagement.model.TrayInData;
 import com.ats.traymanagement.model.TrayMgmtDetailData;
 import com.ats.traymanagement.model.TrayMgmtHeaderData;
 import com.ats.traymanagement.model.TrayMgmtHeaderDisplayList;
@@ -73,6 +75,8 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
     private ArrayList<FranchiseByRoute> franchiseArray = new ArrayList<>();
 
     Dialog dialog;
+
+    TrayInAdapter inAdapter;
 
     int type, headerId;
     String todaysDate;
@@ -114,7 +118,8 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
             // getServerDate(headerId, todaysDate);
             String beanDate = headerBean.getTranDate();
 
-            getAllTrayMgmtDetailsByHeaderForIn(headerId, beanDate);
+            getTrayInData(headerId);
+           // getAllTrayMgmtDetailsByHeaderForIn(headerId, beanDate);
 
 
         } else {
@@ -934,6 +939,79 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
 
         }
     }
+
+
+    public void getTrayInData(final int headerId) {
+        Log.e("HEADER ID", "--------------------" + headerId);
+        if (Constants.isOnline(this)) {
+            final CommonDialog commonDialog = new CommonDialog(this, "Loading", "Please Wait...");
+            commonDialog.show();
+
+            final Call<ArrayList<TrayInData>> trayMgmtDetailDataCall = Constants.myInterface.getTrayInData(headerId);
+            trayMgmtDetailDataCall.enqueue(new Callback<ArrayList<TrayInData>>() {
+                @Override
+                public void onResponse(Call<ArrayList<TrayInData>> call, Response<ArrayList<TrayInData>> response) {
+                    try {
+                        if (response.body() != null) {
+                            commonDialog.dismiss();
+                            ArrayList<TrayInData> data = response.body();
+                            Log.e("DATA : ", "-----------------****-" + response.body());
+
+                            inAdapter = new TrayInAdapter(data, TrayStatusActivity.this);
+
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(TrayStatusActivity.this);
+                            rvList.setLayoutManager(mLayoutManager);
+                            rvList.setItemAnimator(new DefaultItemAnimator());
+                            rvList.setAdapter(inAdapter);
+
+                            int small = 0, big = 0, lead = 0;
+
+                            if (data.size() > 0) {
+
+
+                                for (int i = 0; i < data.size(); i++) {
+
+                                    small = small + data.get(i).getIntraySmall();
+                                    big = big + data.get(i).getIntrayBig();
+                                    lead = lead + data.get(i).getIntrayLead();
+
+                                }
+
+                            }
+
+
+                            tvSmall.setText("" + small);
+                            tvBig.setText("" + big);
+                            tvLarge.setText("" + lead);
+                            tvTotal.setText("" + (small + big + lead));
+                            tvTotalLabel.setText("Total In Tray : ");
+                            tvExtra.setVisibility(View.GONE);
+                            tvExtralabel.setVisibility(View.GONE);
+
+
+                        } else {
+                            commonDialog.dismiss();
+                            Log.e("getTrayInData :", " NULL----****-");
+                        }
+                    } catch (Exception e) {
+                        commonDialog.dismiss();
+                        Log.e("getTrayInData :", " Exception---****--" + e.getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<TrayInData>> call, Throwable t) {
+                    commonDialog.dismiss();
+                    Log.e("getTrayInData :", " OnFailure----****-" + t.getMessage());
+                }
+            });
+
+        } else {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
 
 }

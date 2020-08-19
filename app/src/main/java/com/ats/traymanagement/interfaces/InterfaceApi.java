@@ -1,11 +1,15 @@
 package com.ats.traymanagement.interfaces;
 
+import com.ats.traymanagement.model.AllFrBalanceTrayReport;
 import com.ats.traymanagement.model.Driver;
 import com.ats.traymanagement.model.ErrorMessage;
 import com.ats.traymanagement.model.FrTrayCount;
+import com.ats.traymanagement.model.FrTrayReportData;
 import com.ats.traymanagement.model.FranchiseByRoute;
 import com.ats.traymanagement.model.Info;
+import com.ats.traymanagement.model.LoginModel;
 import com.ats.traymanagement.model.RouteListData;
+import com.ats.traymanagement.model.TrayInData;
 import com.ats.traymanagement.model.TrayMgmtDetailData;
 import com.ats.traymanagement.model.TrayMgmtHeaderData;
 import com.ats.traymanagement.model.TrayMgmtHeaderDisplayList;
@@ -88,5 +92,16 @@ public interface InterfaceApi {
 
     @GET("traymgt/getServerDate")
     Call<Info> getServerDate();
+
+    @POST("traymgt/getTotalTray")
+    Call<ArrayList<TrayInData>> getTrayInData(@Query("tranId") int tranId);
+
+    @POST("traymgt/getAllFrBalanceTray")
+    Call<ArrayList<AllFrBalanceTrayReport>> getAllFrBalTray();
+
+    @POST("traymgt/getFrTrayReportForLastEightDays")
+    Call<ArrayList<FrTrayReportData>> getFrTrayReportData(@Query("frId") int frId, @Query("todaysDate") String todaysDate);
+
+
 
 }

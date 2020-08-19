@@ -139,15 +139,66 @@ public class TrayStatusListAdapter extends RecyclerView.Adapter<TrayStatusListAd
         tvSelectFr.setVisibility(View.GONE);
         tvExtraTray.setVisibility(View.GONE);
 
-        edSmall.setText("" + small);
-        edBig.setText("" + big);
-        edLarge.setText("" + large);
+//        edSmall.setText("" + small);
+//        edBig.setText("" + big);
+//        edLarge.setText("" + large);
+//        edXL.setText("" + xl);
+
+        if (small==0){
+            edSmall.setText("");
+        }else{
+            edSmall.setText("" + small);
+        }
+
+        if (big==0){
+            edBig.setText("");
+        }else{
+            edBig.setText("" + big);
+        }
+
+        if (large==0){
+            edLarge.setText("");
+        }else{
+            edLarge.setText("" + large);
+        }
+
         edXL.setText("" + xl);
 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int sm = Integer.parseInt(edSmall.getText().toString());
+
+                int sm=0,bg=0,lg=0;
+
+                if (edSmall.getText().toString().trim().isEmpty()){
+                    sm=0;
+                }else{
+                    sm = Integer.parseInt(edSmall.getText().toString());
+                }
+
+                if (edBig.getText().toString().trim().isEmpty()){
+                    bg=0;
+                }else{
+                    bg = Integer.parseInt(edBig.getText().toString());
+                }
+
+                if (edLarge.getText().toString().trim().isEmpty()){
+                    lg=0;
+                }else{
+                    lg = Integer.parseInt(edLarge.getText().toString());
+                }
+
+                int xlg = Integer.parseInt(edXL.getText().toString());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar cal = Calendar.getInstance();
+                String todaysDate = sdf.format(cal.getTimeInMillis());
+
+                TrayMgmtDetailData trayMgmtDetailData = new TrayMgmtDetailData(detailId, headerId, frId, frName, bg, sm, lg, xlg, todaysDate, 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, 0f, 0f, 0f, 0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                openDialog.dismiss();
+                saveTrayMgmtDetail(trayMgmtDetailData);
+
+                /* int sm = Integer.parseInt(edSmall.getText().toString());
                 int bg = Integer.parseInt(edBig.getText().toString());
                 int lg = Integer.parseInt(edLarge.getText().toString());
                 int xlg = Integer.parseInt(edXL.getText().toString());
@@ -158,7 +209,11 @@ public class TrayStatusListAdapter extends RecyclerView.Adapter<TrayStatusListAd
 
                 TrayMgmtDetailData trayMgmtDetailData = new TrayMgmtDetailData(detailId, headerId, frId, frName, bg, sm, lg, xlg, todaysDate, 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, 0f, 0f, 0f, 0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 openDialog.dismiss();
-                saveTrayMgmtDetail(trayMgmtDetailData);
+                saveTrayMgmtDetail(trayMgmtDetailData);*/
+
+
+
+
             }
         });
 
