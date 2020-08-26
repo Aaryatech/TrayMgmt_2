@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,11 +18,15 @@ import com.ats.traymanagement.activity.FrTrayReportEightDaysActivity;
 import com.ats.traymanagement.model.AllFrBalanceTrayReport;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class AllFrBalTrayAdapter extends RecyclerView.Adapter<AllFrBalTrayAdapter.MyViewHolder> {
+public class AllFrBalTrayAdapter extends RecyclerView.Adapter<AllFrBalTrayAdapter.MyViewHolder> implements Filterable {
 
     private ArrayList<AllFrBalanceTrayReport> frList;
+    private ArrayList<AllFrBalanceTrayReport> filteredFrList;
     private Context context;
+
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvFrName, tvBalSmall, tvBalBig, tvBalLid;
@@ -41,6 +47,7 @@ public class AllFrBalTrayAdapter extends RecyclerView.Adapter<AllFrBalTrayAdapte
 
     public AllFrBalTrayAdapter(ArrayList<AllFrBalanceTrayReport> frList, Context context) {
         this.frList = frList;
+        this.filteredFrList = frList;
         this.context = context;
     }
 
@@ -55,10 +62,10 @@ public class AllFrBalTrayAdapter extends RecyclerView.Adapter<AllFrBalTrayAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        holder.tvFrName.setText(frList.get(position).getFrName());
-        holder.tvBalSmall.setText(""+frList.get(position).getBalanceSmall());
-        holder.tvBalBig.setText(""+frList.get(position).getBalanceBig());
-        holder.tvBalLid.setText(""+frList.get(position).getBalanceLead());
+        holder.tvFrName.setText(filteredFrList.get(position).getFrName());
+        holder.tvBalSmall.setText(""+filteredFrList.get(position).getBalanceSmall());
+        holder.tvBalBig.setText(""+filteredFrList.get(position).getBalanceBig());
+        holder.tvBalLid.setText(""+filteredFrList.get(position).getBalanceLead());
 
         if(position%2==0){
             holder.card.setCardBackgroundColor(context.getResources().getColor(R.color.colorWhite));
@@ -70,7 +77,7 @@ public class AllFrBalTrayAdapter extends RecyclerView.Adapter<AllFrBalTrayAdapte
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context, FrTrayReportEightDaysActivity.class);
-                intent.putExtra("frId",frList.get(position).getFrId());
+                intent.putExtra("frId",filteredFrList.get(position).getFrId());
                 context.startActivity(intent);
             }
         });
@@ -79,8 +86,43 @@ public class AllFrBalTrayAdapter extends RecyclerView.Adapter<AllFrBalTrayAdapte
 
     @Override
     public int getItemCount() {
-        return frList.size();
+        if(frList != null){
+            return filteredFrList.size();
+        } else {
+            return 0;
+        }
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    filteredFrList = frList;
+                } else {
+                    ArrayList<AllFrBalanceTrayReport> filteredList = new ArrayList<>();
+                    for (AllFrBalanceTrayReport report : frList) {
+                        if (report.getFrName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(report);
+                        }
+                    }
+                    filteredFrList = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredFrList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredFrList = (ArrayList<AllFrBalanceTrayReport>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
 
 }

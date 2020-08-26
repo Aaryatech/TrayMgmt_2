@@ -3,12 +3,15 @@ package com.ats.traymanagement.interfaces;
 import com.ats.traymanagement.model.AllFrBalanceTrayReport;
 import com.ats.traymanagement.model.Driver;
 import com.ats.traymanagement.model.ErrorMessage;
+import com.ats.traymanagement.model.FrList;
 import com.ats.traymanagement.model.FrTrayCount;
 import com.ats.traymanagement.model.FrTrayReportData;
 import com.ats.traymanagement.model.FranchiseByRoute;
+import com.ats.traymanagement.model.InTrayDetail;
 import com.ats.traymanagement.model.Info;
 import com.ats.traymanagement.model.LoginModel;
 import com.ats.traymanagement.model.RouteListData;
+import com.ats.traymanagement.model.TrayDetails;
 import com.ats.traymanagement.model.TrayInData;
 import com.ats.traymanagement.model.TrayMgmtDetailData;
 import com.ats.traymanagement.model.TrayMgmtHeaderData;
@@ -102,6 +105,14 @@ public interface InterfaceApi {
     @POST("traymgt/getFrTrayReportForLastEightDays")
     Call<ArrayList<FrTrayReportData>> getFrTrayReportData(@Query("frId") int frId, @Query("todaysDate") String todaysDate);
 
+    @GET("getAllFrIdName")
+    Call<FrList> getAllFranchisee();
+
+    @POST("traymgt/getTrayMgmtSetailTrayByFrId")
+    Call<ArrayList<InTrayDetail>> getFrReturnTrayInData(@Query("fromDate") String fromDate, @Query("toDate") String toDate, @Query("frId") int frId);
+
+    @POST("traymgt/updateTrayDetailByTrayDetId")
+    Call<TrayDetails> updateReturnTray(@Body InTrayDetail inTrayDetail);
 
 
 }

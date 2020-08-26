@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -266,8 +267,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
 
             case R.id.action_reports:
-                startActivity(new Intent(HomeActivity.this, FranchiseWiseReportActivity.class));
-                return true;
+
+                View vItem = findViewById(R.id.action_reports);
+
+                PopupMenu popupMenu = new PopupMenu(HomeActivity.this, vItem);
+                popupMenu.getMenuInflater().inflate(R.menu.report_sub_menu, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if (menuItem.getItemId() == R.id.menu_report) {
+                            startActivity(new Intent(HomeActivity.this, FranchiseWiseReportActivity.class));
+                        } else if (menuItem.getItemId() == R.id.menu_update) {
+                            startActivity(new Intent(HomeActivity.this, FranchiseActivity.class));
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
+                //startActivity(new Intent(HomeActivity.this, FranchiseWiseReportActivity.class));
+
 
             default:
                 return super.onOptionsItemSelected(item);

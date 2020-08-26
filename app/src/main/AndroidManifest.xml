@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.FrTrayReportEightDaysActivity"></activity>
+        <activity android:name=".activity.FrReturnTrayUpdateActivity"></activity>
+        <activity android:name=".activity.FranchiseActivity" />
+        <activity android:name=".activity.FrTrayReportEightDaysActivity" />
         <activity android:name=".activity.FranchiseWiseReportActivity" />
         <activity
             android:name=".activity.HomeActivity"
