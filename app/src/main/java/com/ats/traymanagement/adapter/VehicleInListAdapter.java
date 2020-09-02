@@ -49,7 +49,7 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
     private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName, tvRoute, tvType, tvTrayStatus, tvExtraTray, tvDate, tvDiesel;
+        public TextView tvName, tvRoute, tvType, tvTrayStatus, tvExtraTrayOut, tvExtraTrayIn, tvDate, tvDiesel;
         public ImageView ivDelete;
         public LinearLayout llDiesel;
 
@@ -59,7 +59,8 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
             tvRoute = view.findViewById(R.id.tvVehicleList_Route);
             tvType = view.findViewById(R.id.tvVehicleList_Type);
             tvTrayStatus = view.findViewById(R.id.tvVehicleList_TrayStatus);
-            tvExtraTray = view.findViewById(R.id.tvVehicleList_ExtraTray);
+            tvExtraTrayOut = view.findViewById(R.id.tvVehicleList_ExtraTrayOut);
+            tvExtraTrayIn = view.findViewById(R.id.tvVehicleList_ExtraTrayIn);
             tvDate = view.findViewById(R.id.tvVehicleList_Date);
             ivDelete = view.findViewById(R.id.ivVehicleList_Delete);
             tvDiesel = view.findViewById(R.id.tvVehicleList_Diesel);
@@ -88,7 +89,7 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
         holder.ivDelete.setVisibility(View.GONE);
         holder.llDiesel.setVisibility(View.VISIBLE);
 
-        holder.tvName.setText(vehicleList.get(position).getTranId()+"_"+vehicleList.get(position).getVehNo() + " " + vehicleList.get(position).getDriverName());
+        holder.tvName.setText(vehicleList.get(position).getTranId() + "_" + vehicleList.get(position).getVehNo() + " " + vehicleList.get(position).getDriverName());
         holder.tvRoute.setText(vehicleList.get(position).getRouteName());
         holder.tvDiesel.setText(vehicleList.get(position).getDiesel() + " lts");
 
@@ -100,7 +101,7 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
 
             final SimpleDateFormat sdf = new SimpleDateFormat("H:mm");
             final Date dateObj = sdf.parse(vehicleList.get(position).getVehOuttime());
-            String timeStr = new SimpleDateFormat("K:mm a").format(dateObj);
+            String timeStr = new SimpleDateFormat("hh:mm a").format(dateObj);
 
             holder.tvDate.setText(dd + "-" + mm + "-" + yyyy + " " + timeStr);
 
@@ -114,7 +115,7 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
         holder.tvType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                vehicleInDialog(vehicleList.get(position).getTranId(), vehicleList.get(position).getDiesel());
+                vehicleInDialog(vehicleList.get(position).getTranId(), vehicleList.get(position).getDiesel(), vehicleList.get(position).getExtraTrayOut(), vehicleList.get(position).getVehOutkm());
             }
         });
 
@@ -122,10 +123,92 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
             holder.tvTrayStatus.setVisibility(View.GONE);
         }
 
-        if (vehicleList.get(position).getExtraTrayOut() == 0) {
-            holder.tvExtraTray.setText(" Extra Tray -0 ");
+        Log.e("Ex - ", "" + vehicleList.get(position).getExtraTrayOut());
+
+        if (vehicleList.get(position).getExtraTrayOut() == "") {
+            holder.tvExtraTrayOut.setText(" Extra Tray Out - 0 ");
         } else {
-            holder.tvExtraTray.setText(" Extra Tray -" + vehicleList.get(position).getExtraTrayOut() + " ");
+            //holder.tvExtraTray.setText(" Extra Tray -" + vehicleList.get(position).getExtraTrayOut() + " ");
+
+            try {
+                String str[] = vehicleList.get(position).getExtraTrayOut().split("#");
+                int sm = 0, bg = 0, ld = 0;
+                if (str.length == 3) {
+                    if (!str[0].isEmpty() || str[0] != "") {
+                        sm = Integer.parseInt(str[0]);
+                    } else {
+                        sm = 0;
+                    }
+
+                    if (!str[1].isEmpty() || str[1] != "") {
+                        bg = Integer.parseInt(str[1]);
+                    } else {
+                        bg = 0;
+                    }
+
+                    if (!str[2].isEmpty() || str[2] != "") {
+                        ld = Integer.parseInt(str[2]);
+                    } else {
+                        ld = 0;
+                    }
+                }
+
+                holder.tvExtraTrayOut.setText(" Extra Tray Out - " + (sm + bg + ld));
+
+            } catch (Exception e) {
+                holder.tvExtraTrayOut.setText(" Extra Tray Out - 0");
+
+            }
+        }
+
+        holder.tvExtraTrayOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                extraTrayDialog(vehicleList.get(position).getTranId(), vehicleList.get(position).getExtraTrayOut(), "out");
+            }
+        });
+
+        if (vehicleList.get(position).getExtraTrayOut() == "") {
+            holder.tvExtraTrayIn.setText(" Extra Tray In - 0 ");
+        } else {
+            //holder.tvExtraTray.setText(" Extra Tray -" + vehicleList.get(position).getExtraTrayOut() + " ");
+
+            try {
+                String str[] = vehicleList.get(position).getExtraTrayIn().split("#");
+                int sm = 0, bg = 0, ld = 0;
+                if (str.length == 3) {
+                    if (!str[0].isEmpty() || str[0] != "") {
+                        sm = Integer.parseInt(str[0]);
+                    } else {
+                        sm = 0;
+                    }
+
+                    if (!str[1].isEmpty() || str[1] != "") {
+                        bg = Integer.parseInt(str[1]);
+                    } else {
+                        bg = 0;
+                    }
+
+                    if (!str[2].isEmpty() || str[2] != "") {
+                        ld = Integer.parseInt(str[2]);
+                    } else {
+                        ld = 0;
+                    }
+                }
+
+                holder.tvExtraTrayIn.setText(" Extra Tray In - " + (sm + bg + ld));
+
+            } catch (Exception e) {
+                holder.tvExtraTrayIn.setText(" Extra Tray In - 0");
+            }
+
+            holder.tvExtraTrayIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    extraTrayDialog(vehicleList.get(position).getTranId(), vehicleList.get(position).getExtraTrayIn(), "in");
+                }
+            });
+
         }
 
         holder.tvTrayStatus.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +240,78 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
         return vehicleList.size();
     }
 
-    public void vehicleInDialog(final int headerId, final float diesel) {
+
+    public void extraTrayDialog(final int headerId, String exTrays, String type) {
+        final Dialog openDialog = new Dialog(context);
+        openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        openDialog.setContentView(R.layout.custom_extra_tray_layout);
+        openDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+
+        Window window = openDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.TOP | Gravity.RIGHT;
+        wlp.dimAmount = 0.75f;
+        wlp.x = 100;
+        wlp.y = 100;
+        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setAttributes(wlp);
+
+        final EditText edExtraTraySmall = openDialog.findViewById(R.id.edExtraTraySmall);
+        final EditText edExtraTrayBig = openDialog.findViewById(R.id.edExtraTrayBig);
+        final EditText edExtraTrayLids = openDialog.findViewById(R.id.edExtraTrayLids);
+        final TextView tvLabel = openDialog.findViewById(R.id.tvExTrayLabel);
+        TextView tvSubmit = openDialog.findViewById(R.id.tvExtraTray_Submit);
+        tvSubmit.setVisibility(View.GONE);
+
+        if (type.equalsIgnoreCase("Out")) {
+            tvLabel.setText("Extra Tray Out");
+        } else if (type.equalsIgnoreCase("In")) {
+            tvLabel.setText("Extra Tray In");
+        } else {
+            tvLabel.setText("Extra Tray");
+        }
+
+        //edExtraTray.setSelection(edExtraTray.getText().length());
+        try {
+            Log.e("TRAYS - ", "" + exTrays);
+            String[] str = exTrays.split("#");
+            String sm = "0", bg = "0", ld = "0";
+            if (str.length == 3) {
+                if (!str[0].isEmpty() || str[0] != "") {
+                    sm = str[0];
+                } else {
+                    sm = "0";
+                }
+
+                if (!str[1].isEmpty() || str[1] != "") {
+                    bg = str[1];
+                } else {
+                    bg = "0";
+                }
+
+                if (!str[2].isEmpty() || str[2] != "") {
+                    ld = str[2];
+                } else {
+                    ld = "0";
+                }
+            }
+
+            edExtraTraySmall.setText(sm);
+            edExtraTrayBig.setText(bg);
+            edExtraTrayLids.setText(ld);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            edExtraTraySmall.setText("0");
+            edExtraTrayBig.setText("0");
+            edExtraTrayLids.setText("0");
+
+        }
+
+        openDialog.show();
+    }
+
+    public void vehicleInDialog(final int headerId, final float diesel, String outTray, final float startKm) {
         final Dialog openDialog = new Dialog(context);
         openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         openDialog.setContentView(R.layout.custom_vehicle_in_dialog);
@@ -173,43 +327,69 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
         window.setAttributes(wlp);
 
         final EditText edEndKm = openDialog.findViewById(R.id.edVehicleInDialog_EndKm);
+        final EditText edStartKm = openDialog.findViewById(R.id.edVehicleInDialog_StartKm);
         final EditText edInTime = openDialog.findViewById(R.id.edVehicleInDialog_InTime);
         final EditText edInTray = openDialog.findViewById(R.id.edVehicleInDialog_InTray);
+        final EditText edInSmall = openDialog.findViewById(R.id.edExSmall);
+        final EditText edInBig = openDialog.findViewById(R.id.edExBig);
+        final EditText edInLids = openDialog.findViewById(R.id.edExLids);
+        final EditText edOutSmall = openDialog.findViewById(R.id.edExOutSmall);
+        final EditText edOutBig = openDialog.findViewById(R.id.edExOutBig);
+        final EditText edOutLids = openDialog.findViewById(R.id.edExOutLids);
         final EditText edDiesel = openDialog.findViewById(R.id.edVehicleInDialog_Diesel);
         TextView tvSubmit = openDialog.findViewById(R.id.tvVehicleInDialog_Submit);
 
-       /* edInTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        edInTime.setText(selectedHour + ":" + selectedMinute + ":00");
-                    }
-                }, hour, minute, false);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
-                mTimePicker.show();
+        edStartKm.setText(""+startKm);
+
+        try {
+            Log.e("TRAYS - ", "" + outTray);
+            String[] str = outTray.split("#");
+            String sm = "0", bg = "0", ld = "0";
+            if (str.length == 3) {
+                if (!str[0].isEmpty() || str[0] != "") {
+                    sm = str[0];
+                } else {
+                    sm = "0";
+                }
+
+                if (!str[1].isEmpty() || str[1] != "") {
+                    bg = str[1];
+                } else {
+                    bg = "0";
+                }
+
+                if (!str[2].isEmpty() || str[2] != "") {
+                    ld = str[2];
+                } else {
+                    ld = "0";
+                }
             }
-        });*/
+
+            edOutSmall.setText(sm);
+            edOutBig.setText(bg);
+            edOutLids.setText(ld);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            edOutSmall.setText("0");
+            edOutBig.setText("0");
+            edOutLids.setText("0");
+
+        }
+
 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String endKm=edEndKm.getText().toString().trim();
+
                 if (edEndKm.getText().toString().isEmpty()) {
                     edEndKm.setError("Required");
                     edEndKm.requestFocus();
-                }
-/*                else if (edInTime.getText().toString().isEmpty()) {
-                    edInTime.setError("Required");
-                    edInTime.requestFocus();
-                }*/
-                else if (edInTray.getText().toString().isEmpty()) {
-                    edInTray.setError("Required");
-                    edInTray.requestFocus();
+                } else if (Float.parseFloat(endKm) < startKm || Float.parseFloat(endKm) > (startKm + 900)) {
+                    edEndKm.setError("End Km is greater than start km.");
+                    edEndKm.requestFocus();
                 } else if (diesel <= 0) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogTheme);
@@ -234,11 +414,33 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
 
                     float inKm = Float.parseFloat(edEndKm.getText().toString());
                     //String inTime = edInTime.getText().toString();
-                    int inTray = Integer.parseInt(edInTray.getText().toString());
+                    // String inTray = edInTray.getText().toString();
                     //float diesel = Float.parseFloat(edDiesel.getText().toString());
 
+
+                    //---------------------------------
+                    String small = edInSmall.getText().toString().trim();
+                    String big = edInBig.getText().toString().trim();
+                    String lids = edInLids.getText().toString().trim();
+                    String tot = "";
+
+                    if (small == "" || small.isEmpty()) {
+                        small = "0";
+                    }
+
+                    if (big == "" || big.isEmpty()) {
+                        big = "0";
+                    }
+
+                    if (lids == "" || lids.isEmpty()) {
+                        lids = "0";
+                    }
+
+                    tot = small + "#" + big + "#" + lids;
+                    //---------------------------------
+
                     openDialog.dismiss();
-                    updateVehicleIn(headerId, inKm, inTray);
+                    updateVehicleIn(headerId, inKm, tot);
 
                 }
             }
@@ -285,7 +487,7 @@ public class VehicleInListAdapter extends RecyclerView.Adapter<VehicleInListAdap
     }
 
 
-    public void updateVehicleIn(int headerId, float inKm, int inTray) {
+    public void updateVehicleIn(int headerId, float inKm, String inTray) {
         if (Constants.isOnline(context)) {
             final CommonDialog commonDialog = new CommonDialog(context, "Loading", "Please Wait...");
             commonDialog.show();

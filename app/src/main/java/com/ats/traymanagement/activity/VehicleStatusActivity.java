@@ -71,7 +71,7 @@ public class VehicleStatusActivity extends AppCompatActivity {
             final CommonDialog commonDialog = new CommonDialog(this, "Loading", "Please Wait...");
             commonDialog.show();
 
-            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date);
+            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date,date);
             headersByDateAndStatus.enqueue(new Callback<ArrayList<TrayMgmtHeaderDisplayList>>() {
                 @Override
                 public void onResponse(Call<ArrayList<TrayMgmtHeaderDisplayList>> call, Response<ArrayList<TrayMgmtHeaderDisplayList>> response) {

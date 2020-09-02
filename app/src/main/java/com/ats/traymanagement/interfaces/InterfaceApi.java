@@ -73,16 +73,19 @@ public interface InterfaceApi {
     Call<Info> updateVehicleOutData(@Query("tranId") int tranId, @Query("vehOutkm") float vehOutkm);
 
     @POST("traymgt/updateInVehicleData")
-    Call<Info> updateVehicleInData(@Query("tranId") int tranId, @Query("vehInkm") float vehInkm, @Query("extraTrayIn") int extraTrayIn);
+    Call<Info> updateVehicleInData(@Query("tranId") int tranId, @Query("vehInkm") float vehInkm, @Query("extraTrayIn") String extraTrayIn);
 
     @POST("traymgt/updateExtraOutTrays")
-    Call<Info> updateVehicleOutTray(@Query("tranId") int tranId, @Query("extraOutTrays") int extraOutTrays);
+    Call<Info> updateVehicleOutTray(@Query("tranId") int tranId, @Query("extraOutTrays") String extraOutTrays);
 
     @POST("traymgt/updateDieselOfVehicle")
     Call<Info> updateDiesel(@Query("tranId") int tranId, @Query("diesel") float diesel);
 
-    @POST("traymgt/getAllVehicles")
-    Call<ArrayList<TrayMgmtHeaderDisplayList>> getAllVehicleList(@Query("date") String date);
+    //@POST("traymgt/getAllVehicles")
+    //Call<ArrayList<TrayMgmtHeaderDisplayList>> getAllVehicleList(@Query("date") String date);
+
+    @POST("traymgt/getAllVehiclesBetDateForApp")
+    Call<ArrayList<TrayMgmtHeaderDisplayList>> getAllVehicleList(@Query("fromDate") String fromDate,@Query("toDate") String toDate);
 
     @POST("traymgt/getTrayMgtHeader")
     Call<TrayMgmtHeaderDisplayList> getHeaderById(@Query("tranId") int tranId);
@@ -113,6 +116,10 @@ public interface InterfaceApi {
 
     @POST("traymgt/updateTrayDetailByTrayDetId")
     Call<TrayDetails> updateReturnTray(@Body InTrayDetail inTrayDetail);
+
+    @POST("traymgt/getVehInLastRecForApp")
+    Call<TrayMgmtHeaderData> getVehInLastRec(@Query("vehId") int vehId);
+
 
 
 }

@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
     VehicleStatusListAdapter adapter;
 
     int yyyy, mm, dd;
-    long dateMillis;
+    long fromDateMillis,toDateMillis;
 
     private ArrayList<String> routeNameArray = new ArrayList<>();
     private ArrayList<Integer> routeIdArray = new ArrayList<>();
@@ -97,7 +97,8 @@ public class HomeFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         String todaysDate = sdf.format(cal.getTimeInMillis());
-        dateMillis = cal.getTimeInMillis();
+        fromDateMillis = cal.getTimeInMillis();
+        toDateMillis = cal.getTimeInMillis();
 
 
         getAllTrayMgmtHeaders(todaysDate);
@@ -276,7 +277,7 @@ public class HomeFragment extends Fragment {
             final CommonDialog commonDialog = new CommonDialog(getActivity(), "Loading", "Please Wait...");
             commonDialog.show();
 
-            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date);
+            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date,date);
             headersByDateAndStatus.enqueue(new Callback<ArrayList<TrayMgmtHeaderDisplayList>>() {
                 @Override
                 public void onResponse(Call<ArrayList<TrayMgmtHeaderDisplayList>> call, Response<ArrayList<TrayMgmtHeaderDisplayList>> response) {
@@ -316,12 +317,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void getAllTrayMgmtHeadersByVehType(String date, final int vehType) {
+    public void getAllTrayMgmtHeadersByVehType(String date,String to, final int vehType) {
         if (Constants.isOnline(getActivity())) {
             final CommonDialog commonDialog = new CommonDialog(getActivity(), "Loading", "Please Wait...");
             commonDialog.show();
 
-            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date);
+            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date,to);
             headersByDateAndStatus.enqueue(new Callback<ArrayList<TrayMgmtHeaderDisplayList>>() {
                 @Override
                 public void onResponse(Call<ArrayList<TrayMgmtHeaderDisplayList>> call, Response<ArrayList<TrayMgmtHeaderDisplayList>> response) {
@@ -390,12 +391,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void getDataByRoute(String date, final int routeId, final int vehType) {
+    public void getDataByRoute(String date,String to, final int routeId, final int vehType) {
         if (Constants.isOnline(getActivity())) {
             final CommonDialog commonDialog = new CommonDialog(getActivity(), "Loading", "Please Wait...");
             commonDialog.show();
 
-            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date);
+            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date,to);
             headersByDateAndStatus.enqueue(new Callback<ArrayList<TrayMgmtHeaderDisplayList>>() {
                 @Override
                 public void onResponse(Call<ArrayList<TrayMgmtHeaderDisplayList>> call, Response<ArrayList<TrayMgmtHeaderDisplayList>> response) {
@@ -457,12 +458,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void getDataByVehicle(String date, final int vehicleId, final int vehType) {
+    public void getDataByVehicle(String date,String to, final int vehicleId, final int vehType) {
         if (Constants.isOnline(getActivity())) {
             final CommonDialog commonDialog = new CommonDialog(getActivity(), "Loading", "Please Wait...");
             commonDialog.show();
 
-            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date);
+            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date,to);
             headersByDateAndStatus.enqueue(new Callback<ArrayList<TrayMgmtHeaderDisplayList>>() {
                 @Override
                 public void onResponse(Call<ArrayList<TrayMgmtHeaderDisplayList>> call, Response<ArrayList<TrayMgmtHeaderDisplayList>> response) {
@@ -522,12 +523,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void getDataByDriver(String date, final int driverId, final int vehType) {
+    public void getDataByDriver(String date,String to, final int driverId, final int vehType) {
         if (Constants.isOnline(getActivity())) {
             final CommonDialog commonDialog = new CommonDialog(getActivity(), "Loading", "Please Wait...");
             commonDialog.show();
 
-            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date);
+            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date,to);
             headersByDateAndStatus.enqueue(new Callback<ArrayList<TrayMgmtHeaderDisplayList>>() {
                 @Override
                 public void onResponse(Call<ArrayList<TrayMgmtHeaderDisplayList>> call, Response<ArrayList<TrayMgmtHeaderDisplayList>> response) {
@@ -588,12 +589,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void getDataByVehicleStatus(String date, final int statusId, final int vehType) {
+    public void getDataByVehicleStatus(String date,String to, final int statusId, final int vehType) {
         if (Constants.isOnline(getActivity())) {
             final CommonDialog commonDialog = new CommonDialog(getActivity(), "Loading", "Please Wait...");
             commonDialog.show();
 
-            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date);
+            Call<ArrayList<TrayMgmtHeaderDisplayList>> headersByDateAndStatus = Constants.myInterface.getAllVehicleList(date,to);
             headersByDateAndStatus.enqueue(new Callback<ArrayList<TrayMgmtHeaderDisplayList>>() {
                 @Override
                 public void onResponse(Call<ArrayList<TrayMgmtHeaderDisplayList>> call, Response<ArrayList<TrayMgmtHeaderDisplayList>> response) {
@@ -744,17 +745,22 @@ public class HomeFragment extends Fragment {
             final Spinner spDriver = findViewById(R.id.spFilterDialog_Driver);
             final Spinner spVehicleStatus = findViewById(R.id.spFilterDialog_VehicleStatus);
 
-            final EditText edDate = findViewById(R.id.edFilterDialog_Date);
+            final EditText edFromDate = findViewById(R.id.edFilterDialog_FromDate);
+            final EditText edToDate = findViewById(R.id.edFilterDialog_ToDate);
 
             TextView tvSearch = findViewById(R.id.tvFilterDialog_Search);
 
-            final TextView tvDate = findViewById(R.id.tvFilterDialog_Date);
+            final TextView tvFromDate = findViewById(R.id.tvFilterDialog_FromDate);
+            final TextView tvToDate = findViewById(R.id.tvFilterDialog_ToDate);
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 
-            edDate.setText("" + sdf.format(dateMillis));
-            tvDate.setText("" + sdf1.format(dateMillis));
+            edFromDate.setText("" + sdf.format(fromDateMillis));
+            tvFromDate.setText("" + sdf1.format(fromDateMillis));
+
+            edToDate.setText("" + sdf.format(toDateMillis));
+            tvToDate.setText("" + sdf1.format(toDateMillis));
 
             rbAll.setChecked(true);
             rbDate.setChecked(true);
@@ -836,13 +842,13 @@ public class HomeFragment extends Fragment {
             spVehicleStatus.setAdapter(vehicleStatusAdapter);
 
 
-            edDate.setOnClickListener(new View.OnClickListener() {
+            edFromDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int yr, mn, dy;
-                    if (dateMillis > 0) {
+                    if (fromDateMillis > 0) {
                         Calendar purchaseCal = Calendar.getInstance();
-                        purchaseCal.setTimeInMillis(dateMillis);
+                        purchaseCal.setTimeInMillis(fromDateMillis);
                         yr = purchaseCal.get(Calendar.YEAR);
                         mn = purchaseCal.get(Calendar.MONTH);
                         dy = purchaseCal.get(Calendar.DAY_OF_MONTH);
@@ -859,8 +865,8 @@ public class HomeFragment extends Fragment {
                             yyyy = year;
                             mm = month + 1;
                             dd = dayOfMonth;
-                            edDate.setText(dd + "-" + mm + "-" + yyyy);
-                            tvDate.setText(yyyy + "-" + mm + "-" + dd);
+                            edFromDate.setText(dd + "-" + mm + "-" + yyyy);
+                            tvFromDate.setText(yyyy + "-" + mm + "-" + dd);
 
                             Calendar calendar = Calendar.getInstance();
                             calendar.set(yyyy, mm - 1, dd);
@@ -868,12 +874,55 @@ public class HomeFragment extends Fragment {
                             calendar.set(Calendar.SECOND, 0);
                             calendar.set(Calendar.MINUTE, 0);
                             calendar.set(Calendar.HOUR, 0);
-                            dateMillis = calendar.getTimeInMillis();
+                            fromDateMillis = calendar.getTimeInMillis();
                         }
                     };
 
 
                     DatePickerDialog dialog = new DatePickerDialog(getActivity(), fromDtListener, yr, mn, dy);
+                    dialog.show();
+                }
+            });
+
+
+            edToDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int yr, mn, dy;
+                    if (toDateMillis > 0) {
+                        Calendar purchaseCal = Calendar.getInstance();
+                        purchaseCal.setTimeInMillis(toDateMillis);
+                        yr = purchaseCal.get(Calendar.YEAR);
+                        mn = purchaseCal.get(Calendar.MONTH);
+                        dy = purchaseCal.get(Calendar.DAY_OF_MONTH);
+                    } else {
+                        Calendar purchaseCal = Calendar.getInstance();
+                        yr = purchaseCal.get(Calendar.YEAR);
+                        mn = purchaseCal.get(Calendar.MONTH);
+                        dy = purchaseCal.get(Calendar.DAY_OF_MONTH);
+                    }
+
+                    DatePickerDialog.OnDateSetListener toDtListener = new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            yyyy = year;
+                            mm = month + 1;
+                            dd = dayOfMonth;
+                            edToDate.setText(dd + "-" + mm + "-" + yyyy);
+                            tvToDate.setText(yyyy + "-" + mm + "-" + dd);
+
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(yyyy, mm - 1, dd);
+                            calendar.set(Calendar.MILLISECOND, 0);
+                            calendar.set(Calendar.SECOND, 0);
+                            calendar.set(Calendar.MINUTE, 0);
+                            calendar.set(Calendar.HOUR, 0);
+                            toDateMillis = calendar.getTimeInMillis();
+                        }
+                    };
+
+
+                    DatePickerDialog dialog = new DatePickerDialog(getActivity(), toDtListener, yr, mn, dy);
                     dialog.show();
                 }
             });
@@ -893,66 +942,86 @@ public class HomeFragment extends Fragment {
                     }
 
                     if (rbDate.isChecked()) {
-                        if (edDate.getText().toString().isEmpty()) {
-                            Toast.makeText(getActivity(), "Please Select Date", Toast.LENGTH_SHORT).show();
-                            edDate.requestFocus();
-                        } else {
-                            String from = tvDate.getText().toString();
+                        if (edFromDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select From Date", Toast.LENGTH_SHORT).show();
+                            edFromDate.requestFocus();
+                        } else if (edToDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select To Date", Toast.LENGTH_SHORT).show();
+                            edToDate.requestFocus();
+                        }else {
+                            String from = tvFromDate.getText().toString();
+                            String to = tvToDate.getText().toString();
                             dismiss();
-                            getAllTrayMgmtHeadersByVehType(from, vehType);
+                            getAllTrayMgmtHeadersByVehType(from,to, vehType);
                         }
                     } else if (rbRoute.isChecked()) {
-                        if (edDate.getText().toString().isEmpty()) {
-                            Toast.makeText(getActivity(), "Please Select Date", Toast.LENGTH_SHORT).show();
-                            edDate.requestFocus();
+                        if (edFromDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select From Date", Toast.LENGTH_SHORT).show();
+                            edFromDate.requestFocus();
+                        } else if (edToDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select To Date", Toast.LENGTH_SHORT).show();
+                            edToDate.requestFocus();
                         } else if (spRoute.getSelectedItemPosition() == 0) {
                             Toast.makeText(getActivity(), "Please Select Route", Toast.LENGTH_SHORT).show();
                             spRoute.requestFocus();
                         } else {
-                            String from = tvDate.getText().toString();
+                            String from = tvFromDate.getText().toString();
+                            String to = tvToDate.getText().toString();
                             int route = routeId.get(spRoute.getSelectedItemPosition());
                             dismiss();
-                            getDataByRoute(from, route, vehType);
+                            getDataByRoute(from,to, route, vehType);
 
                         }
                     } else if (rbVehicle.isChecked()) {
-                        if (edDate.getText().toString().isEmpty()) {
-                            Toast.makeText(getActivity(), "Please Select Date", Toast.LENGTH_SHORT).show();
-                            edDate.requestFocus();
+                        if (edFromDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select From Date", Toast.LENGTH_SHORT).show();
+                            edFromDate.requestFocus();
+                        } else if (edToDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select To Date", Toast.LENGTH_SHORT).show();
+                            edToDate.requestFocus();
                         } else if (spVehicle.getSelectedItemPosition() == 0) {
                             Toast.makeText(getActivity(), "Please Select Vehicle", Toast.LENGTH_SHORT).show();
                             spVehicle.requestFocus();
                         } else {
-                            String from = tvDate.getText().toString();
+                            String from = tvFromDate.getText().toString();
+                            String to = tvToDate.getText().toString();
                             int vehicle = vehicleId.get(spVehicle.getSelectedItemPosition());
                             dismiss();
-                            getDataByVehicle(from, vehicle, vehType);
+                            getDataByVehicle(from,to, vehicle, vehType);
                         }
                     } else if (rbDriver.isChecked()) {
-                        if (edDate.getText().toString().isEmpty()) {
-                            Toast.makeText(getActivity(), "Please Select Date", Toast.LENGTH_SHORT).show();
-                            edDate.requestFocus();
+                        if (edFromDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select From Date", Toast.LENGTH_SHORT).show();
+                            edFromDate.requestFocus();
+                        } else if (edToDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select To Date", Toast.LENGTH_SHORT).show();
+                            edToDate.requestFocus();
                         } else if (spDriver.getSelectedItemPosition() == 0) {
                             Toast.makeText(getActivity(), "Please Select Driver", Toast.LENGTH_SHORT).show();
                             spDriver.requestFocus();
                         } else {
-                            String from = tvDate.getText().toString();
+                            String from = tvFromDate.getText().toString();
+                            String to = tvToDate.getText().toString();
                             int driver = driverId.get(spDriver.getSelectedItemPosition());
                             dismiss();
-                            getDataByDriver(from, driver, vehType);
+                            getDataByDriver(from,to, driver, vehType);
                         }
                     } else if (rbVehicleStatus.isChecked()) {
-                        if (edDate.getText().toString().isEmpty()) {
-                            Toast.makeText(getActivity(), "Please Select Date", Toast.LENGTH_SHORT).show();
-                            edDate.requestFocus();
+                        if (edFromDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select From Date", Toast.LENGTH_SHORT).show();
+                            edFromDate.requestFocus();
+                        } else if (edToDate.getText().toString().isEmpty()) {
+                            Toast.makeText(getActivity(), "Please Select To Date", Toast.LENGTH_SHORT).show();
+                            edToDate.requestFocus();
                         } else if (spVehicleStatus.getSelectedItemPosition() == 0) {
                             Toast.makeText(getActivity(), "Please Select Vehicle Status", Toast.LENGTH_SHORT).show();
                             spVehicleStatus.requestFocus();
                         } else {
-                            String from = tvDate.getText().toString();
+                            String from = tvFromDate.getText().toString();
+                            String to = tvToDate.getText().toString();
                             int vStatus = statusId.get(spVehicleStatus.getSelectedItemPosition());
                             dismiss();
-                            getDataByVehicleStatus(from, (vStatus - 1), vehType);
+                            getDataByVehicleStatus(from,to, (vStatus - 1), vehType);
                         }
                     }
                 }

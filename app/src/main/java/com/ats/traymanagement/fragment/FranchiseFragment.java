@@ -93,7 +93,7 @@ public class FranchiseFragment extends Fragment implements View.OnClickListener 
             String routeName = getArguments().getString("routeName");
             getActivity().setTitle("" + routeName);
             Log.e("Route Id : ", "--------------------" + routeId);
-            getAllFranchise(routeId,headerId);
+            getAllFranchise(routeId, headerId);
         } catch (Exception e) {
             Log.e("Exception Route Id : ", "--------------------" + e.getMessage());
             e.printStackTrace();
@@ -190,26 +190,70 @@ public class FranchiseFragment extends Fragment implements View.OnClickListener 
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(wlp);
 
-        final EditText edExtraTray = openDialog.findViewById(R.id.edExtraTray);
+        final EditText edExtraTraySmall = openDialog.findViewById(R.id.edExtraTraySmall);
+        final EditText edExtraTrayBig = openDialog.findViewById(R.id.edExtraTrayBig);
+        final EditText edExtraTrayLids = openDialog.findViewById(R.id.edExtraTrayLids);
+
         TextView tvSubmit = openDialog.findViewById(R.id.tvExtraTray_Submit);
 
-        edExtraTray.setText(""+headerData.getExtraTrayOut());
-        edExtraTray.setSelection(edExtraTray.getText().length());
+        String totExTray = headerData.getExtraTrayOut();
+        String[] exTray = totExTray.split("#");
+
+        String sm = "0", bg = "0", ld = "0";
+
+        try {
+            if (exTray.length == 3) {
+                sm = exTray[0];
+                bg = exTray[1];
+                ld = exTray[2];
+            }
+        } catch (Exception e) {
+            sm = "0";
+            bg = "0";
+            ld = "0";
+        }
+
+        edExtraTraySmall.setText("" + sm);
+        edExtraTrayBig.setText("" + bg);
+        edExtraTrayLids.setText("" + ld);
+       // edExtraTray.setSelection(edExtraTray.getText().length());
 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edExtraTray.getText().toString().isEmpty()) {
+
+                String small=edExtraTraySmall.getText().toString().trim();
+                String big=edExtraTrayBig.getText().toString().trim();
+                String lids=edExtraTrayLids.getText().toString().trim();
+                String tot="";
+
+                if (small==""){
+                    small="0";
+                }
+
+                if (big==""){
+                    big="0";
+                }
+
+                if (lids==""){
+                    lids="0";
+                }
+
+                tot=small+"#"+big+"#"+lids;
+                openDialog.dismiss();
+                updateVehicleOutTray(headerId, tot);
+
+                /* if (edExtraTray.getText().toString().isEmpty()) {
                     edExtraTray.setError("Required");
                     edExtraTray.requestFocus();
                 } else {
-                    int extraTray = Integer.parseInt(edExtraTray.getText().toString());
+                    String extraTray = edExtraTray.getText().toString();
                     headerData.setExtraTrayOut(extraTray);
 
                     openDialog.dismiss();
 
                     updateVehicleOutTray(headerId, extraTray);
-                }
+                }*/
             }
         });
 
@@ -236,7 +280,7 @@ public class FranchiseFragment extends Fragment implements View.OnClickListener 
                                 Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
 
                                 getAllTrayMgmtDetailsByHeader(headerId);
-                                getAllFranchise(routeId,headerId);
+                                getAllFranchise(routeId, headerId);
                             }
                         } else {
                             commonDialog.dismiss();
@@ -261,12 +305,12 @@ public class FranchiseFragment extends Fragment implements View.OnClickListener 
     }
 
 
-    public void getAllFranchise(int routeId,int headerId) {
+    public void getAllFranchise(int routeId, int headerId) {
         if (Constants.isOnline(getContext())) {
             final CommonDialog commonDialog = new CommonDialog(getActivity(), "Loading", "Please Wait...");
             commonDialog.show();
 
-            Call<ArrayList<FranchiseByRoute>> allFranchiseByRoute = Constants.myInterface.getAllFranchiseByRoute(routeId,headerId);
+            Call<ArrayList<FranchiseByRoute>> allFranchiseByRoute = Constants.myInterface.getAllFranchiseByRoute(routeId, headerId);
             allFranchiseByRoute.enqueue(new Callback<ArrayList<FranchiseByRoute>>() {
                 @Override
                 public void onResponse(Call<ArrayList<FranchiseByRoute>> call, Response<ArrayList<FranchiseByRoute>> response) {
@@ -594,7 +638,7 @@ public class FranchiseFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    public void updateVehicleOutTray(int headerId, final int tray) {
+    public void updateVehicleOutTray(int headerId, final String tray) {
         if (Constants.isOnline(getActivity())) {
             final CommonDialog commonDialog = new CommonDialog(getActivity(), "Loading", "Please Wait...");
             commonDialog.show();

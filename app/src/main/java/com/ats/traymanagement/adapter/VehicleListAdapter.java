@@ -61,7 +61,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
     private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName, tvRoute, tvType, tvTrayStatus, tvExtraTray, tvDate,tvDiesel;
+        public TextView tvName, tvRoute, tvType, tvTrayStatus, tvExtraTray, tvExtraTrayIn, tvDate, tvDiesel;
         public ImageView ivDelete;
         public LinearLayout llDiesel;
 
@@ -71,7 +71,8 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
             tvRoute = view.findViewById(R.id.tvVehicleList_Route);
             tvType = view.findViewById(R.id.tvVehicleList_Type);
             tvTrayStatus = view.findViewById(R.id.tvVehicleList_TrayStatus);
-            tvExtraTray = view.findViewById(R.id.tvVehicleList_ExtraTray);
+            tvExtraTray = view.findViewById(R.id.tvVehicleList_ExtraTrayOut);
+            tvExtraTrayIn = view.findViewById(R.id.tvVehicleList_ExtraTrayIn);
             tvDate = view.findViewById(R.id.tvVehicleList_Date);
             ivDelete = view.findViewById(R.id.ivVehicleList_Delete);
             tvDiesel = view.findViewById(R.id.tvVehicleList_Diesel);
@@ -114,9 +115,11 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
         holder.tvType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                vehicleOutDialog(vehicleList.get(position).getTranId());
+                //vehicleOutDialog(vehicleList.get(position).getTranId());
+                getVehInLastRec(vehicleList.get(position).getTranId(),vehicleList.get(position).getVehId());
             }
         });
+
 
         holder.tvTrayStatus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,16 +140,50 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
             holder.tvTrayStatus.setVisibility(View.GONE);
         }
 
-        if (vehicleList.get(position).getExtraTrayOut() == 0) {
-            holder.tvExtraTray.setText(" Extra Tray -0 ");
+        holder.tvExtraTray.setVisibility(View.VISIBLE);
+        holder.tvExtraTrayIn.setVisibility(View.INVISIBLE);
+
+        if (vehicleList.get(position).getExtraTrayOut() == "") {
+            holder.tvExtraTray.setText(" Extra Tray Out - 0 ");
         } else {
-            holder.tvExtraTray.setText(" Extra Tray -" + vehicleList.get(position).getExtraTrayOut() + " ");
+
+            try {
+                String str[] = vehicleList.get(position).getExtraTrayOut().split("#");
+                int sm = 0, bg = 0, ld = 0;
+                if (str.length == 3) {
+                    if (!str[0].isEmpty() || str[0] != "") {
+                        sm = Integer.parseInt(str[0]);
+                    } else {
+                        sm = 0;
+                    }
+
+                    if (!str[1].isEmpty() || str[1] != "") {
+                        bg = Integer.parseInt(str[1]);
+                    } else {
+                        bg = 0;
+                    }
+
+                    if (!str[2].isEmpty() || str[2] != "") {
+                        ld = Integer.parseInt(str[2]);
+                    } else {
+                        ld = 0;
+                    }
+                }
+
+                holder.tvExtraTray.setText(" Extra Tray Out - " + (sm + bg + ld));
+
+            } catch (Exception e) {
+                holder.tvExtraTray.setText(" Extra Tray Out - 0");
+
+            }
+
+
         }
 
         holder.tvExtraTray.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                extraTrayDialog(vehicleList.get(position).getTranId());
+                extraTrayDialog(vehicleList.get(position).getTranId(), vehicleList.get(position).getExtraTrayOut(), "out");
             }
         });
 
@@ -180,7 +217,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
         return vehicleList.size();
     }
 
-    public void vehicleOutDialog(final int headerId) {
+    public void vehicleOutDialog(final int headerId, final float lastKm) {
         final Dialog openDialog = new Dialog(context);
         openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         openDialog.setContentView(R.layout.custom_vehicle_out_dialog);
@@ -195,9 +232,12 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(wlp);
 
+        final EditText edLastKm = openDialog.findViewById(R.id.edVehicleOutDialog_LastKm);
         final EditText edOutKm = openDialog.findViewById(R.id.edVehicleOutDialog_StartKm);
         final EditText edOutTime = openDialog.findViewById(R.id.edVehicleOutDialog_OutTime);
         TextView tvSubmit = openDialog.findViewById(R.id.tvVehicleOutDialog_Submit);
+
+        edLastKm.setText(""+lastKm);
 
         edOutTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,8 +260,14 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String km=edOutKm.getText().toString().trim();
+
                 if (edOutKm.getText().toString().isEmpty()) {
                     edOutKm.setError("Required");
+                    edOutKm.requestFocus();
+                }else if (Float.parseFloat(km)<lastKm || Float.parseFloat(km)<=0){
+                    edOutKm.setError("Enter OUT km greater than last IN km.");
                     edOutKm.requestFocus();
                 }
                 /*else if (edOutTime.getText().toString().isEmpty()) {
@@ -293,7 +339,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
         }
     }
 
-    public void extraTrayDialog(final int headerId) {
+    public void extraTrayDialog(final int headerId, String exTrays, String type) {
         final Dialog openDialog = new Dialog(context);
         openDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         openDialog.setContentView(R.layout.custom_extra_tray_layout);
@@ -308,29 +354,97 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(wlp);
 
-        final EditText edExtraTray = openDialog.findViewById(R.id.edExtraTray);
+        final EditText edExtraTraySmall = openDialog.findViewById(R.id.edExtraTraySmall);
+        final EditText edExtraTrayBig = openDialog.findViewById(R.id.edExtraTrayBig);
+        final EditText edExtraTrayLids = openDialog.findViewById(R.id.edExtraTrayLids);
+        final TextView tvLabel = openDialog.findViewById(R.id.tvExTrayLabel);
         TextView tvSubmit = openDialog.findViewById(R.id.tvExtraTray_Submit);
 
-        edExtraTray.setSelection(edExtraTray.getText().length());
+        if (type.equalsIgnoreCase("out")) {
+            tvLabel.setText("Extra Tray Out");
+        } else if (type.equalsIgnoreCase("in")) {
+            tvLabel.setText("Extra Tray In");
+        } else {
+            tvLabel.setText("Extra Tray");
+        }
+
+        //edExtraTray.setSelection(edExtraTray.getText().length());
+        try {
+            Log.e("TRAYS - ", "" + exTrays);
+            String[] str = exTrays.split("#");
+            String sm = "0", bg = "0", ld = "0";
+            if (str.length == 3) {
+                if (!str[0].isEmpty() || str[0] != "") {
+                    sm = str[0];
+                } else {
+                    sm = "0";
+                }
+
+                if (!str[1].isEmpty() || str[1] != "") {
+                    bg = str[1];
+                } else {
+                    bg = "0";
+                }
+
+                if (!str[2].isEmpty() || str[2] != "") {
+                    ld = str[2];
+                } else {
+                    ld = "0";
+                }
+            }
+
+            edExtraTraySmall.setText(sm);
+            edExtraTrayBig.setText(bg);
+            edExtraTrayLids.setText(ld);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            edExtraTraySmall.setText("0");
+            edExtraTrayBig.setText("0");
+            edExtraTrayLids.setText("0");
+
+        }
 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edExtraTray.getText().toString().isEmpty()) {
+
+                String small = edExtraTraySmall.getText().toString().trim();
+                String big = edExtraTrayBig.getText().toString().trim();
+                String lids = edExtraTrayLids.getText().toString().trim();
+                String tot = "";
+
+                if (small == "" || small.isEmpty()) {
+                    small = "0";
+                }
+
+                if (big == "" || big.isEmpty()) {
+                    big = "0";
+                }
+
+                if (lids == "" || lids.isEmpty()) {
+                    lids = "0";
+                }
+
+                tot = small + "#" + big + "#" + lids;
+                openDialog.dismiss();
+                updateVehicleOutTray(headerId, tot);
+
+               /* if (edExtraTray.getText().toString().isEmpty()) {
                     edExtraTray.setError("Required");
                     edExtraTray.requestFocus();
                 } else {
-                    int extraTray = Integer.parseInt(edExtraTray.getText().toString());
+                    String extraTray = edExtraTray.getText().toString();
                     openDialog.dismiss();
-                    updateVehicleOutTray(headerId, extraTray);
-                }
+                    updateVehicleOutTray(headerId, tot);
+                }*/
             }
         });
 
         openDialog.show();
     }
 
-    public void updateVehicleOutTray(final int headerId, final int tray) {
+    public void updateVehicleOutTray(final int headerId, final String tray) {
         if (Constants.isOnline(context)) {
             final CommonDialog commonDialog = new CommonDialog(context, "Loading", "Please Wait...");
             commonDialog.show();
@@ -436,4 +550,47 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    //VEH IN LAST RECORD
+    public void getVehInLastRec(final int headerId, int vehId) {
+        if (Constants.isOnline(context)) {
+            final CommonDialog commonDialog = new CommonDialog(context, "Loading", "Please Wait...");
+            commonDialog.show();
+
+            final float[] km = {0};
+
+            Call<TrayMgmtHeaderData> infoCall = Constants.myInterface.getVehInLastRec(vehId);
+            infoCall.enqueue(new Callback<TrayMgmtHeaderData>() {
+                @Override
+                public void onResponse(Call<TrayMgmtHeaderData> call, Response<TrayMgmtHeaderData> response) {
+                    try {
+                        if (response.body() != null) {
+                            TrayMgmtHeaderData data = response.body();
+                            km[0] =data.getVehInkm();
+                            commonDialog.dismiss();
+                        } else {
+                            commonDialog.dismiss();
+                        }
+                    } catch (Exception e) {
+                        commonDialog.dismiss();
+                        vehicleOutDialog(headerId, km[0]);
+                    }
+
+                    vehicleOutDialog(headerId, km[0]);
+                    commonDialog.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<TrayMgmtHeaderData> call, Throwable t) {
+                    commonDialog.dismiss();
+                    vehicleOutDialog(headerId, km[0]);
+                }
+            });
+
+        } else {
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

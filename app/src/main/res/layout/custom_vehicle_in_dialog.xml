@@ -26,6 +26,36 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:fontFamily="@font/open_sans_semi_bold"
+            android:text="Start Km"
+            android:textColor="@color/colorBlack" />
+
+        <EditText
+            android:id="@+id/edVehicleInDialog_StartKm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:editable="false"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="none"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/open_sans_semi_bold"
             android:text="End Km"
             android:textColor="@color/colorBlack" />
 
@@ -77,6 +107,7 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,14 +116,125 @@
         android:orientation="horizontal">
 
         <TextView
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:layout_marginBottom="5dp"
             android:fontFamily="@font/open_sans_semi_bold"
-            android:text="Extra IN Tray"
+            android:text="Extra Tray OUT"
+            android:textColor="@color/colorBlack" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Small"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Big"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Lids"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/edExOutSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="none"
+            android:editable="false"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/edExOutBig"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="none"
+            android:editable="false"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/edExOutLids"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="none"
+            android:editable="false"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:text="Extra Tray IN"
             android:textColor="@color/colorBlack" />
 
         <EditText
+            android:visibility="gone"
             android:id="@+id/edVehicleInDialog_InTray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,6 +242,89 @@
             android:background="@android:drawable/editbox_background_normal"
             android:fontFamily="@font/open_sans_regular"
             android:hint="Enter Total Extra In Tray"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Small"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Big"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Lids"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/edExSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/edExBig"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/edExLids"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
             android:inputType="number"
             android:maxLines="1"
             android:padding="10dp"

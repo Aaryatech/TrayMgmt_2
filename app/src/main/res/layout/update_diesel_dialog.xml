@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:fontFamily="@font/open_sans_semi_bold"
-        android:text="Diesel"
+        android:text="Diesel (lts.)"
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 

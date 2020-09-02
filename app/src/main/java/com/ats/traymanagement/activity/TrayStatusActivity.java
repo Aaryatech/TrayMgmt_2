@@ -445,22 +445,49 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(wlp);
 
-        final EditText edExtraTray = openDialog.findViewById(R.id.edExtraTray);
+        final EditText edExtraTraySmall = openDialog.findViewById(R.id.edExtraTraySmall);
+        final EditText edExtraTrayBig = openDialog.findViewById(R.id.edExtraTrayBig);
+        final EditText edExtraTrayLids = openDialog.findViewById(R.id.edExtraTrayLids);
+
         TextView tvSubmit = openDialog.findViewById(R.id.tvExtraTray_Submit);
 
-        edExtraTray.setSelection(edExtraTray.getText().length());
+
+        //edExtraTray.setSelection(edExtraTray.getText().length());
 
         tvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edExtraTray.getText().toString().isEmpty()) {
+
+                String small=edExtraTraySmall.getText().toString().trim();
+                String big=edExtraTrayBig.getText().toString().trim();
+                String lids=edExtraTrayLids.getText().toString().trim();
+                String tot="";
+
+                if (small==""){
+                    small="0";
+                }
+
+                if (big==""){
+                    big="0";
+                }
+
+                if (lids==""){
+                    lids="0";
+                }
+
+                tot=small+"#"+big+"#"+lids;
+                openDialog.dismiss();
+                updateVehicleOutTray(headerId, tot);
+
+
+                /* if (edExtraTray.getText().toString().isEmpty()) {
                     edExtraTray.setError("Required");
                     edExtraTray.requestFocus();
                 } else {
-                    int extraTray = Integer.parseInt(edExtraTray.getText().toString());
+                    String extraTray = edExtraTray.getText().toString();
                     openDialog.dismiss();
                     updateVehicleOutTray(headerId, extraTray);
-                }
+                }*/
             }
         });
 
@@ -819,7 +846,7 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    public void updateVehicleOutTray(final int headerId, final int tray) {
+    public void updateVehicleOutTray(final int headerId, final String tray) {
         if (Constants.isOnline(this)) {
             final CommonDialog commonDialog = new CommonDialog(this, "Loading", "Please Wait...");
             commonDialog.show();

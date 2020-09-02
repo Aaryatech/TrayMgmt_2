@@ -256,7 +256,7 @@ public class AddRouteFragment extends Fragment implements View.OnClickListener {
                 String vehicleNo = edVehicle.getText().toString();
                 String route = edRoute.getText().toString();
                 // String date = tvDate.getText().toString();
-                int extraTray = 0;
+                String extraTray = "";
 
                 String date = "0000-00-00";
 
@@ -265,12 +265,12 @@ public class AddRouteFragment extends Fragment implements View.OnClickListener {
                         Toast.makeText(getActivity(), "Please Insert Extra Tray", Toast.LENGTH_SHORT).show();
                         edExtraTray.requestFocus();
                     } else {
-                        extraTray = Integer.parseInt(edExtraTray.getText().toString());
-                        TrayMgmtHeaderData headerData = new TrayMgmtHeaderData(0, date, vehicleId, driverId, routeId, vehicleNo, "", "", 0f, 0f, 0f, 0f, 0, 0, extraTray, 0, 0, 1);
+                        extraTray = edExtraTray.getText().toString();
+                        TrayMgmtHeaderData headerData = new TrayMgmtHeaderData(0, date, vehicleId, driverId, routeId, vehicleNo, "", "", 0f, 0f, 0f, 0f, 0, 0, extraTray, "", 0, 1);
                         saveTrayMgmtHeader(headerData, route, 1);
                     }
                 } else {
-                    TrayMgmtHeaderData headerData = new TrayMgmtHeaderData(0, date, vehicleId, driverId, routeId, vehicleNo, "", "", 0f, 0f, 0f, 0f, 0, 0, extraTray, 0, 0, 0);
+                    TrayMgmtHeaderData headerData = new TrayMgmtHeaderData(0, date, vehicleId, driverId, routeId, vehicleNo, "", "", 0f, 0f, 0f, 0f, 0, 0, extraTray, "", 0, 0);
                     saveTrayMgmtHeader(headerData, route, 0);
                     Log.e("DATE : ", "------------------------" + date);
                 }

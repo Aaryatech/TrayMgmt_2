@@ -131,6 +131,8 @@ public class VehicleInListFragment extends Fragment {
                             headerDataArrayList.clear();
                             headerDataArrayList = data;
 
+                            Log.e("IN DATA - ",""+headerDataArrayList);
+
                             adapter = new VehicleInListAdapter(headerDataArrayList, getContext());
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
                             rvVehicleList.setLayoutManager(mLayoutManager);
@@ -221,7 +223,7 @@ public class VehicleInListFragment extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem item = menu.findItem(R.id.action_filter);
-        item.setVisible(true);
+        item.setVisible(false);
 
         MenuItem item1 = menu.findItem(R.id.action_vehicle_status);
         item1.setVisible(false);

@@ -22,15 +22,15 @@ public class TrayMgmtHeaderData {
     private float diesel;
     private int vehStatus;
     private int delStatus;
-    private int extraTrayOut;
-    private int extraTrayIn;
+    private String extraTrayOut;
+    private String extraTrayIn;
     private int vehIsRegular;
     private int isSameDay;
 
     public TrayMgmtHeaderData() {
     }
 
-    public TrayMgmtHeaderData(int tranId, String tranDate, int vehId, int drvId, int routeId, String vehNo, String vehOuttime, String vehIntime, float vehOutkm, float vehInkm, float vehRunningKm, float diesel, int vehStatus, int delStatus, int extraTrayOut, int extraTrayIn, int vehIsRegular,int isSameDay) {
+    public TrayMgmtHeaderData(int tranId, String tranDate, int vehId, int drvId, int routeId, String vehNo, String vehOuttime, String vehIntime, float vehOutkm, float vehInkm, float vehRunningKm, float diesel, int vehStatus, int delStatus, String extraTrayOut, String extraTrayIn, int vehIsRegular,int isSameDay) {
         this.tranId = tranId;
         this.tranDate = tranDate;
         this.vehId = vehId;
@@ -187,19 +187,19 @@ public class TrayMgmtHeaderData {
         this.delStatus = delStatus;
     }
 
-    public int getExtraTrayOut() {
+    public String getExtraTrayOut() {
         return extraTrayOut;
     }
 
-    public void setExtraTrayOut(int extraTrayOut) {
+    public void setExtraTrayOut(String extraTrayOut) {
         this.extraTrayOut = extraTrayOut;
     }
 
-    public int getExtraTrayIn() {
+    public String getExtraTrayIn() {
         return extraTrayIn;
     }
 
-    public void setExtraTrayIn(int extraTrayIn) {
+    public void setExtraTrayIn(String extraTrayIn) {
         this.extraTrayIn = extraTrayIn;
     }
 

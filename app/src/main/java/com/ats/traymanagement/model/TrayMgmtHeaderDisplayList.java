@@ -22,8 +22,8 @@ public class TrayMgmtHeaderDisplayList {
     private float diesel;
     private int vehStatus;
     private int delStatus;
-    private int extraTrayOut;
-    private int extraTrayIn;
+    private String extraTrayOut;
+    private String extraTrayIn;
     private int vehIsRegular;
     private int isSameDay;
 
@@ -163,19 +163,19 @@ public class TrayMgmtHeaderDisplayList {
         this.delStatus = delStatus;
     }
 
-    public int getExtraTrayOut() {
+    public String getExtraTrayOut() {
         return extraTrayOut;
     }
 
-    public void setExtraTrayOut(int extraTrayOut) {
+    public void setExtraTrayOut(String extraTrayOut) {
         this.extraTrayOut = extraTrayOut;
     }
 
-    public int getExtraTrayIn() {
+    public String getExtraTrayIn() {
         return extraTrayIn;
     }
 
-    public void setExtraTrayIn(int extraTrayIn) {
+    public void setExtraTrayIn(String extraTrayIn) {
         this.extraTrayIn = extraTrayIn;
     }
 

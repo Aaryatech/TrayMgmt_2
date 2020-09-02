@@ -20,9 +20,9 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -30,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:checked="true"
                 android:fontFamily="@font/open_sans_regular"
                 android:text="All" />
 
@@ -59,10 +60,10 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="7dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
             <RadioButton
@@ -110,30 +111,59 @@
             android:id="@+id/llFilterDialog_Date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="7dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:visibility="gone">
 
 
             <EditText
-                android:id="@+id/edFilterDialog_Date"
+                android:id="@+id/edFilterDialog_FromDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
                 android:background="@android:drawable/editbox_background_normal"
                 android:editable="false"
                 android:focusable="false"
                 android:fontFamily="@font/open_sans_regular"
                 android:gravity="center"
-                android:hint="Select Date"
+                android:hint="From Date"
                 android:inputType="none"
                 android:padding="10dp" />
 
             <TextView
-                android:id="@+id/tvFilterDialog_Date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="to"/>
+
+            <EditText
+                android:id="@+id/edFilterDialog_ToDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@android:drawable/editbox_background_normal"
+                android:editable="false"
+                android:focusable="false"
+                android:fontFamily="@font/open_sans_regular"
+                android:gravity="center"
+                android:hint="To Date"
+                android:inputType="none"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/tvFilterDialog_FromDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvFilterDialog_ToDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
 
         </LinearLayout>
 
@@ -141,7 +171,7 @@
             android:id="@+id/llFilterDialog_Route"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="7dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:visibility="gone">
@@ -161,7 +191,7 @@
             android:id="@+id/llFilterDialog_Vehicle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="7dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:visibility="gone">
@@ -180,7 +210,7 @@
             android:id="@+id/llFilterDialog_Driver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="7dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:visibility="gone">
@@ -199,7 +229,7 @@
             android:id="@+id/llFilterDialog_VehicleStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="7dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:visibility="gone">

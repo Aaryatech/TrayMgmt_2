@@ -26,6 +26,36 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:fontFamily="@font/open_sans_semi_bold"
+            android:text="Last IN Km"
+            android:textColor="@color/colorBlack" />
+
+        <EditText
+            android:id="@+id/edVehicleOutDialog_LastKm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:editable="false"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="none"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/open_sans_semi_bold"
             android:text="Start Km"
             android:textColor="@color/colorBlack" />
 

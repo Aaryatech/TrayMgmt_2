@@ -261,7 +261,7 @@ public class VehicleListFragment extends Fragment {
         super.onPrepareOptionsMenu(menu);
 
         MenuItem item = menu.findItem(R.id.action_filter);
-        item.setVisible(true);
+        item.setVisible(false);
 
         MenuItem item1 = menu.findItem(R.id.action_vehicle_status);
         item1.setVisible(false);

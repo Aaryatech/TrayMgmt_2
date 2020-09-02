@@ -11,20 +11,92 @@
         android:layout_margin="15dp"
         android:fontFamily="@font/open_sans_semi_bold"
         android:text="Extra Tray"
+        android:id="@+id/tvExTrayLabel"
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/edExtraTray"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:background="@android:drawable/editbox_background_normal"
-        android:fontFamily="@font/open_sans_regular"
-        android:inputType="number"
-        android:maxLines="1"
-        android:padding="10dp"
-        android:singleLine="true" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Small"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Big"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="Lids"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/edExtraTraySmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/edExtraTrayBig"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/edExtraTrayLids"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:fontFamily="@font/open_sans_regular"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvExtraTray_Submit"
