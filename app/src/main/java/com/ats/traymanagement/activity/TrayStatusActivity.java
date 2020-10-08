@@ -78,7 +78,7 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
 
     TrayInAdapter inAdapter;
 
-    int type, headerId;
+    int type, headerId,vehStatus=0;
     String todaysDate;
 
     @Override
@@ -105,6 +105,11 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
 
         headerId = getIntent().getIntExtra("headerId", 0);
         type = getIntent().getIntExtra("type", 0);
+
+        try{
+            vehStatus = getIntent().getIntExtra("vehStatus", 0);
+        }catch (Exception e){}
+
 
         Gson gson = new Gson();
         String headerStr = getIntent().getStringExtra("headerBean");
@@ -162,7 +167,7 @@ public class TrayStatusActivity extends AppCompatActivity implements View.OnClic
                             Gson gson = new Gson();
                             String bean = gson.toJson(headerBean);
 
-                            adapter = new TrayStatusListAdapter(data, TrayStatusActivity.this, type, bean);
+                            adapter = new TrayStatusListAdapter(data, TrayStatusActivity.this, type, bean,vehStatus);
 
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(TrayStatusActivity.this);
                             rvList.setLayoutManager(mLayoutManager);

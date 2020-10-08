@@ -340,6 +340,8 @@ public class VehicleStatusListAdapter extends RecyclerView.Adapter<VehicleStatus
                     intent.putExtra("headerId", vehicleList.get(position).getTranId());
                     intent.putExtra("headerBean", bean);
                     intent.putExtra("type", 0);
+                    intent.putExtra("vehStatus", vehicleList.get(position).getVehStatus());
+
                     context.startActivity(intent);
                 }
             }

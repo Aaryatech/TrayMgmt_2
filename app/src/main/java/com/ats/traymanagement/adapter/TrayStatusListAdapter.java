@@ -44,7 +44,7 @@ public class TrayStatusListAdapter extends RecyclerView.Adapter<TrayStatusListAd
     private ArrayList<TrayMgmtDetailData> trayStatusList;
     private Context context;
     private String headerBean;
-    private int type;
+    private int type,vehStatus;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvFrName, tvTotal, tvSmall, tvBig, tvLarge, tvXl;
@@ -62,17 +62,19 @@ public class TrayStatusListAdapter extends RecyclerView.Adapter<TrayStatusListAd
         }
     }
 
-    public TrayStatusListAdapter(ArrayList<TrayMgmtDetailData> trayStatusList, Context context, int type) {
+    public TrayStatusListAdapter(ArrayList<TrayMgmtDetailData> trayStatusList, Context context, int type,int vehStatus) {
         this.trayStatusList = trayStatusList;
         this.context = context;
         this.type = type;
+        this.vehStatus = vehStatus;
     }
 
-    public TrayStatusListAdapter(ArrayList<TrayMgmtDetailData> trayStatusList, Context context, int type, String bean) {
+    public TrayStatusListAdapter(ArrayList<TrayMgmtDetailData> trayStatusList, Context context, int type, String bean,int vehStatus) {
         this.trayStatusList = trayStatusList;
         this.context = context;
         this.headerBean = bean;
         this.type = type;
+        this.vehStatus = vehStatus;
     }
 
     @Override
@@ -94,7 +96,12 @@ public class TrayStatusListAdapter extends RecyclerView.Adapter<TrayStatusListAd
         if (type == 1) {
             holder.ivEdit.setVisibility(View.VISIBLE);
         } else {
-            holder.ivEdit.setVisibility(View.GONE);
+            if (trayStatusList.get(position).getTrayStatus()==1){
+                holder.ivEdit.setVisibility(View.VISIBLE);
+            }else{
+                holder.ivEdit.setVisibility(View.GONE);
+            }
+
         }
 
         holder.ivEdit.setOnClickListener(new View.OnClickListener() {
