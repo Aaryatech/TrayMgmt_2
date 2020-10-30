@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ats.traymanagement.R;
@@ -34,6 +35,8 @@ public class FranchiseWiseReportActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     AllFrBalTrayAdapter adapter;
+    private TextView tvTotBal, tvBalSmall, tvBalBig, tvBalLid;
+    int balSmall = 0, balBig = 0, balLid = 0,totBal=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,16 @@ public class FranchiseWiseReportActivity extends AppCompatActivity {
         setTitle("Franchise Balance Tray Report");
 
         recyclerView = findViewById(R.id.recyclerView);
+
+        tvTotBal = findViewById(R.id.tvTotalBal);
+        tvBalSmall = findViewById(R.id.tvBalSmall);
+        tvBalBig = findViewById(R.id.tvBalBig);
+        tvBalLid = findViewById(R.id.tvBalLarge);
+
+        tvBalSmall.setText(""+balSmall);
+        tvBalBig.setText(""+balBig);
+        tvBalLid.setText(""+balLid);
+        tvTotBal.setText(""+totBal);
 
         getTrayReport();
     }
@@ -66,13 +79,29 @@ public class FranchiseWiseReportActivity extends AppCompatActivity {
                             commonDialog.dismiss();
                             Log.e("TRAY Report : ", "Info Date---------------------------" + data);
 
-                           // Collections.reverse(data);
+                            // Collections.reverse(data);
 
-                            adapter = new AllFrBalTrayAdapter(data,FranchiseWiseReportActivity.this);
+                            adapter = new AllFrBalTrayAdapter(data, FranchiseWiseReportActivity.this);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(FranchiseWiseReportActivity.this);
                             recyclerView.setLayoutManager(mLayoutManager);
                             recyclerView.setItemAnimator(new DefaultItemAnimator());
                             recyclerView.setAdapter(adapter);
+
+                            if (data.size() > 0) {
+                                for (int i = 0; i < data.size(); i++) {
+                                    balSmall=balSmall+data.get(i).getBalanceSmall();
+                                    balBig=balBig+data.get(i).getBalanceBig();
+                                    balLid=balLid+data.get(i).getBalanceLead();
+                                }
+
+                                totBal=balSmall+balBig+balLid;
+
+                                tvBalSmall.setText(""+balSmall);
+                                tvBalBig.setText(""+balBig);
+                                tvBalLid.setText(""+balLid);
+                                tvTotBal.setText(""+totBal);
+                            }
+
 
                         } else {
                             commonDialog.dismiss();

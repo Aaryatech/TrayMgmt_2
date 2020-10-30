@@ -84,8 +84,10 @@
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold" />
 
+
+
             <TextView
-                android:id="@+id/tvOpLead"
+                android:id="@+id/tvOpBig"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -96,7 +98,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvOpBig"
+                android:id="@+id/tvOpLead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -133,8 +135,10 @@
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold" />
 
+
+
             <TextView
-                android:id="@+id/tvRecLead"
+                android:id="@+id/tvRecBig"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -145,7 +149,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvRecBig"
+                android:id="@+id/tvRecLead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -182,8 +186,10 @@
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold" />
 
+
+
             <TextView
-                android:id="@+id/tvRetLead"
+                android:id="@+id/tvRetBig"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -194,7 +200,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvRetBig"
+                android:id="@+id/tvRetLead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -231,8 +237,10 @@
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold" />
 
+
+
             <TextView
-                android:id="@+id/tvBalLead"
+                android:id="@+id/tvBalBig"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -243,7 +251,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvBalBig"
+                android:id="@+id/tvBalLead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

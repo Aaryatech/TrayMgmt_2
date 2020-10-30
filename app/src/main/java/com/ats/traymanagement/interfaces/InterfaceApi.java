@@ -85,7 +85,7 @@ public interface InterfaceApi {
     //Call<ArrayList<TrayMgmtHeaderDisplayList>> getAllVehicleList(@Query("date") String date);
 
     @POST("traymgt/getAllVehiclesBetDateForApp")
-    Call<ArrayList<TrayMgmtHeaderDisplayList>> getAllVehicleList(@Query("fromDate") String fromDate,@Query("toDate") String toDate);
+    Call<ArrayList<TrayMgmtHeaderDisplayList>> getAllVehicleList(@Query("fromDate") String fromDate, @Query("toDate") String toDate);
 
     @POST("traymgt/getTrayMgtHeader")
     Call<TrayMgmtHeaderDisplayList> getHeaderById(@Query("tranId") int tranId);
@@ -120,6 +120,24 @@ public interface InterfaceApi {
     @POST("traymgt/getVehInLastRecForApp")
     Call<TrayMgmtHeaderData> getVehInLastRec(@Query("vehId") int vehId);
 
+    @POST("traymgt/getTrayDetailForBalanceByFr")
+    Call<ArrayList<TrayDetails>> getBalTraySum(@Query("frId") int frId,
+                                               @Query("delStatus") int status);
+
+    @POST("traymgt/updateReturnTrayByAdmin")
+    Call<Info> updateReturnTrayNew(@Query("frId") int frId,
+                                   @Query("date") String date,
+                                   @Query("small") int small,
+                                   @Query("big") int big,
+                                   @Query("lid") int lid);
+
+
+    @POST("traymgt/updateReturnTrayValuesByAdmin")
+    Call<Info> updateReturnTrayValuesByAdmin(@Query("frId") int frId,
+                                             @Query("small") int small,
+                                             @Query("big") int big,
+                                             @Query("lid") int lid,
+                                             @Query("vehIntrayId") int vehIntrayId);
 
 
 }

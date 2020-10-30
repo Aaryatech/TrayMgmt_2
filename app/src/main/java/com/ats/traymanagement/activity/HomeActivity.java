@@ -1,29 +1,21 @@
 package com.ats.traymanagement.activity;
 
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.ats.traymanagement.R;
 import com.ats.traymanagement.constants.Constants;
@@ -33,7 +25,6 @@ import com.ats.traymanagement.fragment.HomeFragment;
 import com.ats.traymanagement.fragment.VehicleInListFragment;
 import com.ats.traymanagement.fragment.VehicleListFragment;
 
-import java.util.Calendar;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -272,6 +263,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
                 PopupMenu popupMenu = new PopupMenu(HomeActivity.this, vItem);
                 popupMenu.getMenuInflater().inflate(R.menu.report_sub_menu, popupMenu.getMenu());
+
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
+                int isAdmin=pref.getInt("isAdmin",0);
+
+                Log.e("MENU"," --------> "+popupMenu.getMenu().getItem(0));
+
+                if (isAdmin==1){
+
+                    popupMenu.getMenu().getItem(0).setVisible(true);
+                }else{
+                    popupMenu.getMenu().getItem(0).setVisible(false);
+                }
+
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
@@ -284,8 +288,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
                 popupMenu.show();
-                //startActivity(new Intent(HomeActivity.this, FranchiseWiseReportActivity.class));
-
 
             default:
                 return super.onOptionsItemSelected(item);

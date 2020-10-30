@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -34,6 +35,8 @@ import java.util.Calendar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by MAXADMIN on 16/2/2018.
@@ -93,15 +96,21 @@ public class TrayStatusListAdapter extends RecyclerView.Adapter<TrayStatusListAd
         holder.tvLarge.setText("" + trayStatusList.get(position).getOuttrayLead());
         holder.tvXl.setText("" + trayStatusList.get(position).getOuttrayExtra());
 
-        if (type == 1) {
+        SharedPreferences pref = context.getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
+
+        int isAdmin=pref.getInt("isAdmin",0);
+        Log.e("IS ADMIN","--------------------- "+isAdmin);
+
+        //Toast.makeText(context, ""+type, Toast.LENGTH_SHORT).show();
+
+        if (type == 1 && isAdmin==1 && trayStatusList.get(position).getTrayStatus()==1) {
             holder.ivEdit.setVisibility(View.VISIBLE);
         } else {
-            if (trayStatusList.get(position).getTrayStatus()==1){
+            if (trayStatusList.get(position).getTrayStatus()==1 && isAdmin==1){
                 holder.ivEdit.setVisibility(View.VISIBLE);
             }else{
                 holder.ivEdit.setVisibility(View.GONE);
             }
-
         }
 
         holder.ivEdit.setOnClickListener(new View.OnClickListener() {
@@ -201,7 +210,7 @@ public class TrayStatusListAdapter extends RecyclerView.Adapter<TrayStatusListAd
                 Calendar cal = Calendar.getInstance();
                 String todaysDate = sdf.format(cal.getTimeInMillis());
 
-                TrayMgmtDetailData trayMgmtDetailData = new TrayMgmtDetailData(detailId, headerId, frId, frName, bg, sm, lg, xlg, todaysDate, 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, 0f, 0f, 0f, 0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                TrayMgmtDetailData trayMgmtDetailData = new TrayMgmtDetailData(detailId, headerId, frId, frName, bg, sm, lg, xlg, todaysDate, 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, "0000-00-00", 0, 0, 0, 0, 0f, 0f, 0f, 0f, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
                 openDialog.dismiss();
                 saveTrayMgmtDetail(trayMgmtDetailData);
 
@@ -253,7 +262,7 @@ public class TrayStatusListAdapter extends RecyclerView.Adapter<TrayStatusListAd
                                 Intent intent = new Intent(context, TrayStatusActivity.class);
                                 intent.putExtra("headerId", trayMgmtDetailData.getTranId());
                                 intent.putExtra("headerBean", headerBean);
-                                intent.putExtra("type", 1);
+                                intent.putExtra("type", type);
                                 context.startActivity(intent);
 
                             }

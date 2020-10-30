@@ -254,4 +254,9 @@ public class InTrayDetailAdapter extends RecyclerView.Adapter<InTrayDetailAdapte
 
     }
 
+
+
+
+
+
 }

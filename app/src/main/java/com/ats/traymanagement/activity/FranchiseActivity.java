@@ -183,10 +183,12 @@ public class FranchiseActivity extends AppCompatActivity implements View.OnClick
 
             if (strFromDate.isEmpty()) {
                 edFromDate.setError("Required");
-            } else if (strToDate.isEmpty()) {
-                edFromDate.setError(null);
-                edToDate.setError("Required");
-            } else if (strFrId.isEmpty()) {
+            }
+//            else if (strToDate.isEmpty()) {
+//                edFromDate.setError(null);
+//                edToDate.setError("Required");
+//            }
+            else if (strFrId.isEmpty()) {
                 edFromDate.setError(null);
                 edToDate.setError(null);
                 edFr.setError("Required");
@@ -197,7 +199,8 @@ public class FranchiseActivity extends AppCompatActivity implements View.OnClick
 
                 Intent intent = new Intent(FranchiseActivity.this, FrReturnTrayUpdateActivity.class);
                 intent.putExtra("FromDate", strFromDate);
-                intent.putExtra("ToDate", strToDate);
+                intent.putExtra("ToDate", strFromDate);
+               // intent.putExtra("ToDate", strToDate);
                 intent.putExtra("FrName", strFr);
                 intent.putExtra("FrId", strFrId);
                 startActivity(intent);

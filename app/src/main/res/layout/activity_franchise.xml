@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:editable="false"
             android:focusableInTouchMode="false"
-            android:hint="From Date"
+            android:hint="Date"
             android:inputType="none"
             android:maxLines="1"
             android:singleLine="true" />
@@ -34,6 +34,7 @@
 
 
     <android.support.design.widget.TextInputLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp">

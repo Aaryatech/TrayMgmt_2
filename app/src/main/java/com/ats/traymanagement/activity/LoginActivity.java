@@ -57,7 +57,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("username", "gfpl");
+                    editor.putString("username", "GFPL ADMIN");
+                    editor.putInt("isAdmin", 1);
+                    editor.apply();
+
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
+                }else if (username.equals("security") && pass.equals("security")) {
+
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences(Constants.MY_PREF, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("username", "GFPL SECURITY");
+                    editor.putInt("isAdmin", 0);
                     editor.apply();
 
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
